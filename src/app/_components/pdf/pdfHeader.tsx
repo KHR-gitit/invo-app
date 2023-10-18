@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import {Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
@@ -26,39 +27,11 @@ const styles = StyleSheet.create({
     }
   });
 
-  interface Props {
-    invoice: {
-        id: string;
-        invoice_no: number | undefined;
-        businessData: {
-          company: string | undefined;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
-        }
-        clientData: {
-          fullName: string;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
-        }
 
-        trans_date: string;
-        due_date: string;
-        items: {
-            sno: number;
-            desc: string;
-            qty: number;
-            rate: number;
-        }[]
-
-    };
 
     
-  }
-
-    
-  const PdfHeader = ({invoice}:Props) => (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const PdfHeader = ({invoice}:any) => (
     <View style={styles.viewContainer}>
 
     

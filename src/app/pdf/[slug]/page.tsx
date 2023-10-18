@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client"
 import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
@@ -35,39 +36,9 @@ const styles = StyleSheet.create({
 
   });
 
-interface Props {
-    invoice: {
-        id: string;
-        invoice_no: number ;
-        businessData: {
-          company: string;
-          email: string;
-          phone: string;
-          address: string;
-        }
-        clientData: {
-          fullName: string;
-          email: string;
-          phone: string;
-          address: string;
-        }
-
-        trans_date: string;
-        due_date: string;
-        items: {
-            sno: number;
-            desc: string;
-            qty: number;
-            rate: number;
-        }[]
-
-    };
-
-    
-  }
-
 // Create Document Component
-const MyDocument = ({invoice}:Props) => (
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MyDocument = ({invoice}:any) => (
     <Document>
     <Page size="A4" style={styles.page}>
         <PdfHeader invoice={invoice}/>
@@ -90,20 +61,21 @@ console.log(params.slug)
 const {data , isLoading} = api.invoice.getInvoice.useQuery({id:params.slug})
 
 
-
+console.log(data?.data)
 
 
   
     return (
       <>
-        {!isLoading && (<>
-            <PDFDownloadLink document={<MyDocument invoice={data?.data}/>} fileName="invoice.pdf">
+        {!isLoading ? (<>
+            <PDFDownloadLink document={<MyDocument invoice={data?.data}/>
+    } fileName="invoice.pdf">
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : `${params.slug}`)}</PDFDownloadLink>
           <PDFViewer className='w-full h-screen'>
                 <MyDocument invoice={data?.data}/>
           </PDFViewer> 
         </>
-        )}
+        ):<div>loading</div>}
       </>
     );
   }
