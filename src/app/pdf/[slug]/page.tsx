@@ -8,7 +8,7 @@ import PdfBillTo from '../../_components/pdf/pdfBillTo'
 import PdfNum from '../../_components/pdf/pdfNum'
 import PdfItemTable from '../../_components/pdf/pdfItemTable'
 import PdfTYMessage from '../../_components/pdf/pdfTYMessage'
-import { api } from '~/trpc/client';
+import { api } from '~/trpc/server';
 import PdfHeader from '~/app/_components/pdf/pdfHeader';
 
 
@@ -38,18 +38,18 @@ const styles = StyleSheet.create({
 interface Props {
     invoice: {
         id: string;
-        invoice_no: number | undefined;
+        invoice_no: number ;
         businessData: {
-          company: string | undefined;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
+          company: string;
+          email: string;
+          phone: string;
+          address: string;
         }
         clientData: {
           fullName: string;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
+          email: string;
+          phone: string;
+          address: string;
         }
 
         trans_date: string;
@@ -86,31 +86,7 @@ const MyDocument = ({invoice}:Props) => (
 
   export default function Pdf ({ params }: { params: { slug: string } }) {
 
-const [invoiceData, setInvoiceData] = useState({
-  id: "",
-  invoice_no: 0,
-  businessData: {
-    company: "",
-    email: "",
-    phone: "",
-    address: "",
-  },
-  clientData: {
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
-  },
-
-  trans_date: "",
-  due_date: "",
-  items: [{
-      sno: 0,
-      desc: "",
-      qty: 0,
-      rate: 0,
-  }]
-})
+const [invoiceData, setInvoiceData] = useState({})
 const [isClient, setIsClient] = useState(false)
 useEffect(() => {
   const fetchInvoice = async () => {
