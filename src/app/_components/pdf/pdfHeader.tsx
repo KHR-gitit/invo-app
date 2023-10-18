@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import logo from "./../../saiid-bel-hDq8jlhE0co-unsplash.jpg"
 const styles = StyleSheet.create({
     headerContainer: {
 
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     <View style={styles.viewContainer}>
 
     
-<Image src={logo.src} style={styles.logo}/>
+
     <View style={styles.headerContainer}>
         <Text style={styles.billTo}>Bill From:</Text>
         <Text>{invoice.businessData.company}</Text>
