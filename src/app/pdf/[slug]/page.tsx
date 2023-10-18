@@ -8,7 +8,7 @@ import PdfBillTo from '../../_components/pdf/pdfBillTo'
 import PdfNum from '../../_components/pdf/pdfNum'
 import PdfItemTable from '../../_components/pdf/pdfItemTable'
 import PdfTYMessage from '../../_components/pdf/pdfTYMessage'
-import { api } from '~/trpc/server';
+import { api } from '~/trpc/react';
 import PdfHeader from '~/app/_components/pdf/pdfHeader';
 
 
