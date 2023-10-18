@@ -21,8 +21,8 @@ export default async function Home() {
   //   logo:"lkjasdfoij"
   // })
 // const data = await api.invoice.create.mutate({
-//   businessId:"clnqycq3j0006u8g59751w6i5",
-//   clientId:"clnqyexhl000eu8g5adaxc17a",
+//   businessId:"clnv4jfb80001u8sh4wwju8f8",
+//   clientId:"clnv4n1cn0007u8shy6y0px0p",
 //   items:[
 //     {sno:1,desc:"brush",qty:2,rate:20}
 //     ,{sno:2,desc:"paint",qty:3,rate:10},

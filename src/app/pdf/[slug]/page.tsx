@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
@@ -86,32 +86,21 @@ const MyDocument = ({invoice}:Props) => (
 
   export default function Pdf ({ params }: { params: { slug: string } }) {
 
-const [invoiceData, setInvoiceData] = useState({})
-const [isClient, setIsClient] = useState(false)
-useEffect(() => {
-  const fetchInvoice = async () => {
-    try {
-      const invoice = await api.invoice.getInvoice.query({id: params.slug})
-      setInvoiceData(invoice.data)
-      console.log(invoice.data)
-      setIsClient(true)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  void fetchInvoice()
-  
-}, [params.slug])
+console.log(params.slug)
+const {data , isLoading} = api.invoice.getInvoice.useQuery({id:params.slug})
+
+
+
 
 
   
     return (
       <>
-        {isClient && (<>
-            <PDFDownloadLink document={<MyDocument invoice={invoiceData}/>} fileName="invoice.pdf">
+        {!isLoading && (<>
+            <PDFDownloadLink document={<MyDocument invoice={data?.data}/>} fileName="invoice.pdf">
           {({ blob, url, loading, error }) => (loading ? 'Loading document...' : `${params.slug}`)}</PDFDownloadLink>
           <PDFViewer className='w-full h-screen'>
-                <MyDocument invoice={invoiceData}/>
+                <MyDocument invoice={data?.data}/>
           </PDFViewer> 
         </>
         )}

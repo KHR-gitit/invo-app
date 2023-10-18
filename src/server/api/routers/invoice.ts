@@ -15,14 +15,14 @@ export const invoiceRouter = createTRPCRouter({
     };
   }),
 
-  getInvoice: protectedProcedure.input(z.object({id: z.string()})).query(async(opts)=>{
-    const invoice = await opts.ctx.db.invoice.findUnique({where:{id:opts.input.id}})
-    const client = await opts.ctx.db.client.findUnique({where:{id:invoice?.clientId}})
-    const business = await opts.ctx.db.business.findUnique({where:{id:invoice?.businessId}})
+  getInvoice: protectedProcedure.input(z.object({id: z.string()})).query(async({ctx,input})=>{
+    const invoice = await ctx.db.invoice.findUnique({where:{id:input.id}})
+    const client = await ctx.db.client.findUnique({where:{id:invoice?.clientId}})
+    const business = await ctx.db.business.findUnique({where:{id:invoice?.businessId}})
 
     return {
       data:{
-        id: opts.input.id,
+        id: input.id,
         invoice_no: invoice?.invoiceId ?? 2,
         clientData: {
           fullName: `${client?.fName ?? ''} ${client?.lName ?? ''}`,
