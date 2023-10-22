@@ -38,3 +38,7 @@ ________________________________________________________________________________
 first meeting :
 
 we talked about what we have done so far what can we improve on came up with some new design idea's for for the app. 
+
+
+Updates:
+Update the Add Invoice form and add new fields to create new invoices 
