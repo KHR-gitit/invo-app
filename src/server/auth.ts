@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { Session } from "inspector";
 import {
   getServerSession,
   type DefaultSession,
@@ -43,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: user.id,
       },
-    }),
+    })
   },
   adapter: PrismaAdapter(db),
   providers: [

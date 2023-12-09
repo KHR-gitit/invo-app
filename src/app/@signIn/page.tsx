@@ -1,12 +1,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import bgImage from "../../public/Background.jpg"
+import bgImage from "../../../public/Background.jpg"
 
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
-export default async function Home() {
+export default async function SignIn() {
 
 
 
@@ -34,8 +34,8 @@ export default async function Home() {
 //     {sno:3,desc:"paper",qty:4,rate:5}],
 //     dueDate:new Date("2023-10-15T04:16:03.849Z"),
 //     quote:true})
-const session = await getServerAuthSession();
 
+const session = await getServerAuthSession();
 
   return (
     <main className="flex relative justify-between overflow-hidden h-screen flex-col items-center text-white">
@@ -51,7 +51,7 @@ const session = await getServerAuthSession();
             <path d="M58.5672 89.7542L56.3284 84.9396V55H58.5672V89.7542ZM63.0448 99.3025L60.806 94.407V55H63.0448V99.3025ZM67.5224 108.972L65.2836 104.036V55H67.5224V108.972ZM35.4328 87.2458L37.6716 92.0604V122H35.4328V87.2458ZM30.9552 77.6975L33.194 82.593V122H30.9552V77.6975ZM26.4776 68.0278L28.7164 72.9638V122H26.4776V68.0278ZM27.255 55H29.8669L61.5211 122H58.9092L27.255 55ZM32.541 55H35.1841L66.8072 122H64.1331L32.541 55ZM37.796 55H40.408L69.7612 117.266V55H72V122C72 122 71.119 122 69.357 122L37.796 55ZM24.2388 59.7337V122H22V55C22 55 22.8914 55 24.6741 55L56.2351 122H53.6542L24.2388 59.7337Z" fill="white"/>
             <path d="M13.7143 0H16V122H13.7143V0ZM9.14286 0H11.4286V122H9.14286V0ZM4.57143 0H6.85714V122H4.57143V0ZM0 0H2.28571V122H0V0Z" fill="white"/>
           </svg>
-
+    
         </h1>
         <div className="mx-auto text-2xl">
           <h3>Making Invoice Made Easy
@@ -65,7 +65,7 @@ const session = await getServerAuthSession();
               {session && <span>Logged in as {session.user?.name}</span>}
             </p>
             <Link
-              href={session ? "/dashboard" : "/api/auth/signin"}
+              href={session ? "/dashboard/" : "/api/auth/signin"}
               className=" rounded-md bg-white text-[#2148C0] px-10 py-3 font-semibold no-underline transition shadow-md shadow-black"
             >
               {session ? "Dashboard" : "Sign in"}

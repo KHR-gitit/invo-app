@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { headers } from "next/headers";
+import { getServerAuthSession } from "~/server/auth";
 
 import { TRPCReactProvider } from "~/trpc/react";
 
@@ -16,15 +17,21 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
-  children,
+export default async function RootLayout({
+  children,dashboard,signIn
 }: {
   children: React.ReactNode;
+  dashboard: React.ReactNode;
+  signIn: React.ReactNode;
 }) {
+
+  const session = await getServerAuthSession()
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          {!session?signIn:dashboard}
+        </TRPCReactProvider>
       </body>
     </html>
   );

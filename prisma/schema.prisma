@@ -52,6 +52,7 @@ model Business {
     id            String   @id @default(cuid())
     logo          String
     name          String
+    abn           String
     address       String
     contactNumber String
     email         String
