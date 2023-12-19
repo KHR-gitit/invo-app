@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
@@ -7,14 +9,15 @@ import { api } from '~/trpc/react'
 import ShortList from './shortlist'
 
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function clientComp() {
+export default function ClientComp() {
     const {isLoading,data} = api.bussiness.getBusiness.useQuery()
   const {mutate} = api.client.create.useMutation()
   const [agreed, setAgreed] = useState(false)
+  const [businessId, setBusinessId] = useState("")
 
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -38,11 +41,11 @@ export default function clientComp() {
             e.preventDefault();
             const data = new FormData(e.target as HTMLFormElement);
 
-            const value: { [key: string]: string | string[] } = Object.fromEntries(data.entries());
+            const value: Record<string, string | string[]> = Object.fromEntries(data.entries());
 
             const formData = value
   
-            mutate({name: formData.company, email: formData.email, contactNumber: formData["phone-number"], abn: formData["abn-number"], logo: logo, address: (!agreed? formData.address: formData.address + " " + formData.suburb + " " + formData.state + " " + formData["postal-code"])})
+            mutate({fName: formData.firstName, lName: formData.lastName, email: formData.email, contactNumber: formData["phone-number"], businessId: businessId.id, address: (!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)})
 
         }}
         className="mx-auto mt-16 max-w-xl sm:mt-20"
@@ -50,28 +53,28 @@ export default function clientComp() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 
           <div className="sm:col-span-1">
-            <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="firstName" className="block text-sm font-semibold leading-6 text-gray-900">
               First Name
             </label>
             <div className="mt-2.5">
               <input
                 type="text"
-                name="company"
-                id="company"
+                name="firstName"
+                id="firstName"
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="sm:col-span-1">
-            <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="lastName" className="block text-sm font-semibold leading-6 text-gray-900">
               Last Name
             </label>
             <div className="mt-2.5">
               <input
                 type="text"
-                name="company"
-                id="company"
+                name="lastName"
+                id="lastName"
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -106,17 +109,15 @@ export default function clientComp() {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="abn-number" className="block text-sm font-semibold leading-6 text-gray-900">
+            <label htmlFor="business-id" className="block text-sm font-semibold leading-6 text-gray-900">
               Business
             </label>
             <div className="relative mt-2.5">
                 {isLoading? <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                autoComplete="tel"
+                name="business-id"
+                id="business-id"
                 className="block w-full rounded-md border-0 px-3.5 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />:<ShortList business={data.data}/>}
+              />:<ShortList id="business-id" name="business-id"  business={data.data} setBusinessId={setBusinessId}/>}
             </div>
           </div>
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">

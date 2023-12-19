@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
@@ -6,7 +8,7 @@ import { Input } from 'postcss'
 import { api } from '~/trpc/react'
 
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -41,7 +43,7 @@ export default function BusinessComp() {
 
             const formData = value
   
-            mutate({name: formData.company, email: formData.email, contactNumber: formData["phone-number"], abn: formData["abn-number"], logo: logo, address: (!agreed? formData.address: formData.address + " " + formData.suburb + " " + formData.state + " " + formData["postal-code"])})
+            mutate({name: formData.company, email: formData.email, contactNumber: formData["phone-number"], abn: formData["abn-number"], logo: logo, address: (!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)})
 
         }}
         className="mx-auto mt-16 max-w-xl sm:mt-20"

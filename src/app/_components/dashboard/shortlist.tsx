@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 
 
 
-function classNames(...classes) {
+function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -15,9 +19,14 @@ type Business = {
 }
 
 
-export default function ShortList({business}: { business: Business[] }) {
+export default function ShortList({business, setBusinessId}: { business: Business[], setBusinessId: (id: string) => string|null }) {
   const [query, setQuery] = useState('')
   const [selectedPerson, setSelectedPerson] = useState(null)
+  useEffect(() => {
+    setBusinessId(selectedPerson)
+
+  }, [selectedPerson])
+  
 
   const filteredBusiness =
     query === ''

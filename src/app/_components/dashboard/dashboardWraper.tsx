@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { Children, Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { useSearchParams } from 'next/navigation'
 import {
   Bars3Icon,
   BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
   Cog6ToothIcon,
   DocumentDuplicateIcon,
   FolderIcon,
@@ -15,8 +17,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import Dashboard from '~/app/_components/dashboard/dashboard'
-import Business from '~/app/_components/dashboard/business'
 import { useRouter } from 'next/navigation'
 
 
@@ -24,6 +24,7 @@ const navigation = [
   { name: 'Dashboard', icon: HomeIcon, current: true },
   { name: 'Businesses', icon: FolderIcon, current: false },
   { name: 'Clients', icon: UsersIcon, current: false },
+  { name: 'Qoutes', icon: DocumentDuplicateIcon, current: false },
   { name: 'Invoices', icon: DocumentDuplicateIcon, current: false }
 ]
 const userNavigation = [
@@ -31,7 +32,7 @@ const userNavigation = [
   { name: 'Sign out', href: './../../api/auth/signout' },
 ]
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
 
 
 
