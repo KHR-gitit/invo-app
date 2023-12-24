@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
@@ -16,6 +16,7 @@ function classNames(...classes: string[]) {
 export default function ClientComp() {
     const {isLoading,data} = api.bussiness.getBusiness.useQuery()
   const {mutate} = api.client.create.useMutation()
+  
   const [agreed, setAgreed] = useState(false)
   const [businessId, setBusinessId] = useState("")
 
@@ -41,11 +42,14 @@ export default function ClientComp() {
             e.preventDefault();
             const data = new FormData(e.target as HTMLFormElement);
 
-            const value: Record<string, string | string[]> = Object.fromEntries(data.entries());
+            const value: Record<string, string | string[]> = Object.fromEntries(
+              data.entries()
+            ) as Record<string, string | string[]>;
 
             const formData = value
+            value ? mutate({fName: `${formData.firstName}`, lName: `${formData.lastName}`, email: `${formData.email}`, contactNumber: `${formData["phone-number"]}`, businessId: businessId, address: `${(!agreed? formData.address: formData.address + " " + formData.suburb + " " + formData.state + " " + formData["postal-code"])}`}):""
   
-            mutate({fName: formData.firstName, lName: formData.lastName, email: formData.email, contactNumber: formData["phone-number"], businessId: businessId.id, address: (!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)})
+           
 
         }}
         className="mx-auto mt-16 max-w-xl sm:mt-20"
@@ -117,7 +121,7 @@ export default function ClientComp() {
                 name="business-id"
                 id="business-id"
                 className="block w-full rounded-md border-0 px-3.5 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />:<ShortList id="business-id" name="business-id"  business={data.data} setBusinessId={setBusinessId}/>}
+              /> : data ? <ShortList business={data.data} setBusinessId={setBusinessId}/>:""}
             </div>
           </div>
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">

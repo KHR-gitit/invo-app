@@ -36,14 +36,14 @@ export default function BusinessComp() {
       </div>
     <form
         onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.target as HTMLFormElement);
+          e.preventDefault();
+          const data = new FormData(e.target as HTMLFormElement);
 
-            const value: { [key: string]: string | string[] } = Object.fromEntries(data.entries());
-
-            const formData = value
-  
-            mutate({name: formData.company, email: formData.email, contactNumber: formData["phone-number"], abn: formData["abn-number"], logo: logo, address: (!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)})
+          const value: Record<string, string | string[]> = Object.fromEntries(
+            data.entries()
+          ) as Record<string, string | string[]>;
+          const formData = value
+            mutate({name: `${formData.company}`, email: `${formData.email}`, contactNumber: `${formData["phone-number"]}`, abn: `${formData["abn-number"]}`, logo: logo, address: `${(!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)}`})
 
         }}
         className="mx-auto mt-16 max-w-xl sm:mt-20"
@@ -211,7 +211,13 @@ export default function BusinessComp() {
           // Do something with the response
           console.log("Files: ", res);
           
-          !res ? setLogo("this is the logo") : setLogo(res[0].fileUrl);
+          if(!res){
+            setLogo("this is the logo")
+          }else{
+            res[0] === undefined? setLogo("this is the logo"):
+setLogo(res[0].fileUrl);
+
+          }
           
           alert("Upload Completed");
         }}
