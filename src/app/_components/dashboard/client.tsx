@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
-import { UploadButton } from './uptButton'
-import { Input } from 'postcss'
 import { api } from '~/trpc/react'
 import ShortList from './shortlist'
 

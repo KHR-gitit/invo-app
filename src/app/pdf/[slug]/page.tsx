@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client"
-import React, { useEffect, useState } from 'react';
-import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import React from 'react';
+import { Document, Page, View, StyleSheet } from '@react-pdf/renderer';
 import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 
 import PdfTitle from '../../_components/pdf/pdfTitle'
@@ -70,7 +70,7 @@ console.log(data?.data)
         {!isLoading ? (<>
             <PDFDownloadLink document={<MyDocument invoice={data?.data}/>
     } fileName="invoice.pdf">
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : `${params.slug}`)}</PDFDownloadLink>
+          {({ loading }) => (loading ? 'Loading document...' : `${params.slug}`)}</PDFDownloadLink>
           <PDFViewer className='w-full h-screen'>
                 <MyDocument invoice={data?.data}/>
           </PDFViewer> 

@@ -5,7 +5,6 @@
 "use client"
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { useSearchParams } from 'next/navigation'
 import {
   Bars3Icon,
   BellIcon,
@@ -42,10 +41,8 @@ function classNames(...classes: string[]) {
 export default function DashboardWraper
 ({user, children}: {user: any,children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const searchParams = useSearchParams()
   const router = useRouter()
  
-  const search = searchParams.get('active')
   const setActive = ({activeItem}:{activeItem: string}) => {
     router.push(`?active=${activeItem}`)
     
