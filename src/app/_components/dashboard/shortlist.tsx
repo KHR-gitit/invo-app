@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 import { useEffect, useState } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
@@ -25,6 +22,7 @@ export default function ShortList({business, setBusinessId}: { business: Busines
   useEffect(() => {
     setBusinessId(selectedPerson)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPerson])
   
 

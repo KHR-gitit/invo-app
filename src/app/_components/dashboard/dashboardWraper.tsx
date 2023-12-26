@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
@@ -39,7 +36,8 @@ function classNames(...classes: string[]) {
 }
 
 export default function DashboardWraper
-({user, children}: {user: any,children: React.ReactNode}) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+({user, children}: {user: { name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; },children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
  
@@ -235,11 +233,13 @@ export default function DashboardWraper
                 <Menu as="div" className="relative">
                   <Menu.Button className="-m-1.5 flex items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
+                    {!user?.image?"":
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
                       src={user?.image}
                       alt=""
                     />
+                    }
                     <span className="hidden lg:flex lg:items-center">
                       <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
                         {user?.name}

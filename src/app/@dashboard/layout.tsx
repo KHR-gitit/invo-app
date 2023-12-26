@@ -1,9 +1,8 @@
-import { ReactNode, useState} from "react";
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { ReactNode} from "react";
 import Head from "next/head";
 import DashboardWraper from "../_components/dashboard/dashboardWraper";
 import { getServerAuthSession } from '~/server/auth';
-import {useParams} from "next/navigation";
-import { set } from "zod";
 
 
 
@@ -31,9 +30,11 @@ const Layout = async ({children, title }: Props) => {
                 <title>{title}</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
+            {!session?"":
             <DashboardWraper user={session?.user}>
                 {children}
             </DashboardWraper>
+            }
         </>
     );
 };

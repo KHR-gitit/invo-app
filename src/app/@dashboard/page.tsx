@@ -13,6 +13,7 @@ function Dashboard({
   searchParams,
 }: {
   params: { slug: string };
+  // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const active = searchParams?.active

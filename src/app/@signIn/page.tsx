@@ -4,7 +4,7 @@ import Link from "next/link";
 import bgImage from "../../../public/Background.jpg"
 
 import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+
 
 export default async function SignIn() {
 
