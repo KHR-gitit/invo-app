@@ -57,10 +57,7 @@ const styles = StyleSheet.create({
                 <Text style={styles.label}>Invoice No:</Text>
                 <Text style={styles.invoiceDate}>{invoice.invoice_no}</Text>
             </View >
-            <View style={styles.invoiceDateContainer}>
-                <Text style={styles.label}>Date: </Text>
-                <Text >{invoice.trans_date}</Text>
-            </View >
+
         </Fragment>
   );
   

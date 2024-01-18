@@ -3,7 +3,14 @@ import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
     headerContainer: {
-        marginTop: 36
+        backgroundColor: '#F0F0F0',
+        borderTop: 1,
+        padding: 8,
+        width: '100%',
+        marginTop: 36,
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between"
     },
     billTo: {
         marginTop: 20,
@@ -12,43 +19,19 @@ const styles = StyleSheet.create({
     },
   });
 
-  interface Props {
-    invoice: {
-        id: string;
-        invoice_no: number | undefined;
-        businessData: {
-          company: string | undefined;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
-        }
-        clientData: {
-          fullName: string;
-          email: string | undefined;
-          phone: string | undefined;
-          address: string | undefined;
-        }
-
-        trans_date: string;
-        due_date: string;
-        items: {
-            sno: number;
-            desc: string;
-            qty: number;
-            rate: number;
-        }[]
-
-    };
-
-    
-  }
-  const PdfBillTo = ({invoice}:Props) => (
+  const PdfBillTo = ({invoiceClient}:{invoiceClient: {
+    fullName: string;
+    address: string;
+    phone: string;
+    email: string;
+}}) => (
     <View style={styles.headerContainer}>
-        <Text style={styles.billTo}>Bill To:</Text>
-        <Text>{invoice.clientData.fullName}</Text>
-        <Text>{invoice.clientData.address}</Text>
-        <Text>{invoice.clientData.phone}</Text>
-        <Text>{invoice.clientData.email}</Text>
+        <Text>{invoiceClient.fullName}</Text>
+        <View>
+        <Text>{invoiceClient.address}</Text>
+        <Text>{invoiceClient.phone}</Text>
+        <Text>{invoiceClient.email}</Text>
+        </View>
     </View>
   );
   

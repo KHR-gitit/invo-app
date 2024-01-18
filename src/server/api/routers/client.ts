@@ -37,5 +37,12 @@ export const clientRouter = createTRPCRouter({
           businessId: input.businessId,
         }
       })
-    })
+    }),
+  getClient: protectedProcedure.query(async (opts) => {
+    const client = await opts.ctx.db.client.findMany()
+
+    return {data: client.map((client) => ({id:client.id, name:`${client.fName} ${client.lName}`}))};
+    
+  })
+,
   })

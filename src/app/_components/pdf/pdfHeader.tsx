@@ -1,49 +1,68 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
 import {Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-const styles = StyleSheet.create({
-    headerContainer: {
 
-    },
-    billTo: {
-        marginTop: 20,
-        paddingBottom: 3,
-        fontFamily: 'Helvetica-Oblique'
-    },
+interface Invoice {
+    businessData: {
+        company: string;
+        address: string;
+        abn: string;
+        phone: string;
+        email: string;
+        logo: string;
+    };
+}
+
+const styles = StyleSheet.create({
     viewContainer: {
         position:"relative",
-        top:0,
+        width:352,
         display:"flex",
         flexDirection:"row",
-        justifyContent:"flex-end",
-        lineHeight: 1.5,
+        justifyContent:"space-around",
+        textAlign:"right",
+        
     },
     logo: {
-        width: 74,
-        height: 66,
-        position:"absolute",
-        left:0,
-        top:0,
-    }
+        width: 200,
+        height: 106,
+        marginLeft:-50
+    },
+    headerContainer: {
+        lineHeight: 1.5,
+        paddingRight: 8,
+
+    },
+    billTo: {   
+        fontWeight: 'extrabold',
+        fontSize: 10,
+        fontFamily: 'Helvetica-Bold',
+        width:'50%',
+        textAlign:"right",
+
+    },
+    textDetail:{
+        position:"relative",
+        textAlign:"right",
+        width:'50%'
+
+    },
+
   });
 
-
-
-    
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const PdfHeader = ({invoice}:any) => (
+const PdfHeader = ({invoice}: {invoice: Invoice}) => (
     <View style={styles.viewContainer}>
-
-    
-
-    <View style={styles.headerContainer}>
-        <Text style={styles.billTo}>Bill From:</Text>
-        <Text>{invoice.businessData.company}</Text>
-        <Text>{invoice.businessData.address}</Text>
-        <Text>{invoice.businessData.phone}</Text>
-        <Text>{invoice.businessData.email}</Text>
+        <Image src={invoice.businessData.logo  } style={styles.logo}/>
+        <View style={styles.headerContainer}>
+            <Text style={styles.billTo}>Prepered By:</Text>
+            <Text style={styles.textDetail} >{invoice.businessData.company}</Text>
+            <Text style={styles.textDetail} >{invoice.businessData.address}</Text>
+            <Text style={styles.textDetail} >ABN {invoice.businessData.abn}</Text>
+            <Text style={styles.textDetail} > www.painthouse.coma.au</Text>
+            <Text style={styles.textDetail} >{invoice.businessData.email} - {invoice.businessData.phone}</Text>
+        </View>
     </View>
-    </View>
-  );
+);
+
   
   export default PdfHeader

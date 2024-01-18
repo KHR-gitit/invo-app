@@ -1,12 +1,11 @@
 import React from 'react';
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
-const borderColor = '#90e5fc'
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        borderBottomColor: '#bff0fd',
-        backgroundColor: '#bff0fd',
+        backgroundColor: '#2e2d2d',
+        color: '#fff',
         borderBottomWidth: 1,
         alignItems: 'center',
         height: 24,
@@ -16,17 +15,17 @@ const styles = StyleSheet.create({
     },
     description: {
         width: '60%',
-        borderRightColor: borderColor,
+
         borderRightWidth: 1,
     },
     qty: {
         width: '10%',
-        borderRightColor: borderColor,
+
         borderRightWidth: 1,
     },
     rate: {
         width: '15%',
-        borderRightColor: borderColor,
+
         borderRightWidth: 1,
     },
     amount: {

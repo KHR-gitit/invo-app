@@ -43,6 +43,11 @@ export const businessRouter = createTRPCRouter({
     
   })
 ,
+  getBussinessData: protectedProcedure.query(async (opts) => {
+    const business = await opts.ctx.db.business.findMany()
+
+    return {data: business};
+  }),
   getSecretMessage: protectedProcedure.query(() => {
     return "this is a secret message!";
   }),

@@ -42,7 +42,6 @@ export default function BusinessComp() {
           ) as Record<string, string | string[]>;
           const formData = value
             mutate({name: `${formData.company}`, email: `${formData.email}`, contactNumber: `${formData["phone-number"]}`, abn: `${formData["abn-number"]}`, logo: logo, address: `${(!agreed? formData.address: `${formData.address}  ${formData.suburb} ${formData.state} ${formData["postal-code"]}`)}`})
-
         }}
         className="mx-auto mt-16 max-w-xl sm:mt-20"
     >

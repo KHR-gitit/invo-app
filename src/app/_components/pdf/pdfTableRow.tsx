@@ -1,34 +1,26 @@
 import React, {Fragment} from 'react';
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
-const borderColor = '#90e5fc'
+
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        borderBottomColor: '#bff0fd',
         borderBottomWidth: 1,
         alignItems: 'center',
-        height: 24,
         fontStyle: 'bold',
     },
     description: {
         width: '60%',
         textAlign: 'left',
-        borderRightColor: borderColor,
-        borderRightWidth: 1,
         paddingLeft: 8,
     },
     qty: {
         width: '10%',
-        borderRightColor: borderColor,
-        borderRightWidth: 1,
         textAlign: 'right',
         paddingRight: 8,
     },
     rate: {
         width: '15%',
-        borderRightColor: borderColor,
-        borderRightWidth: 1,
         textAlign: 'right',
         paddingRight: 8,
     },
@@ -37,23 +29,29 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         paddingRight: 8,
     },
+    itemName:{
+        fontSize: 10,
+        fontFamily: 'Helvetica-Bold',
+    },
+    itemDesc:{
+        fontSize: 8,
+        fontFamily: 'Helvetica',
+        color: '#7f7f7f',
+    }
   });
-  interface Props {
 
-        items: {
-            sno: number;
-            desc: string;
-            qty: number;
-            rate: number;
-        }[]
 
-    
-  }
-
-const PdfTableRow = ({items}:Props) => {
-    const rows = items.map( item => 
+const PdfTableRow = ({items}:{items:{sno:number,name:string,desc:string,qty:number,rate:number}[]}) => {
+    const rows = items.map( (item) => 
         <View style={styles.row} key={item.sno.toString()}>
-            <Text style={styles.description}>{item.desc}</Text>
+            <View style={styles.description}>
+            <Text style={styles.itemName}>
+            {item.name}
+            </Text>
+            <Text style={styles.itemDesc}>
+            {item.desc}
+            </Text>
+            </View>
             <Text style={styles.qty}>{item.qty}</Text>
             <Text style={styles.rate}>{item.rate}</Text>
             <Text style={styles.amount}>{(item.qty * item.rate).toFixed(2)}</Text>

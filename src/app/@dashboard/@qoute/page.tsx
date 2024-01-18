@@ -1,9 +1,16 @@
 import React from 'react'
+import QouteComp from '~/app/_components/dashboard/qoute'
 
 function Qoute() {
   return (
-    <div>Qoute</div>
+    <QouteComp/>
   )
 }
 
 export default Qoute
+
+
+
+
+
+

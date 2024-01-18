@@ -17,50 +17,56 @@ export const invoiceRouter = createTRPCRouter({
 
   getInvoice: protectedProcedure.input(z.object({id: z.string()})).query(async({ctx,input})=>{
     const invoice = await ctx.db.invoice.findUnique({where:{id:input.id}})
-    const client = await ctx.db.client.findUnique({where:{id:invoice?.clientId}})
-    const business = await ctx.db.business.findUnique({where:{id:invoice?.businessId}})
-
+    if (!invoice) throw new Error('Invoice not found')
+    const client = await ctx.db.client.findUnique({where:{id:invoice.clientId}})
+    if (!client) throw new Error('Client not found')
+    const business = await ctx.db.business.findUnique({where:{id:invoice.businessId}})
+    if (!business) throw new Error('Business not found')
     return {
-      data:{
+
         id: input.id,
-        invoice_no: invoice?.invoiceId ?? 2,
+        invoice_no: invoice.invoiceId ?? 2,
         clientData: {
-          fullName: `${client?.fName ?? ''} ${client?.lName ?? ''}`,
-          address: client?.address,
-          phone: client?.contactNumber,
-          email: client?.email
+          fullName: `${client.fName ?? ''} ${client.lName ?? ''}`,
+          address: client.address,
+          phone: client.contactNumber,
+          email: client.email
 
 
         },
         businessData:{
-          company: business?.name,
-          email: business?.email,
-          phone: business?.contactNumber,
-          address: business?.address,
+          logo: business.logo,
+          company: business.name,
+          email: business.email,
+          abn: business.abn,
+          phone: business.contactNumber,
+          address: business.address,
         },
 
         trans_date:new Intl.DateTimeFormat('en-AU', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
-        }).format(invoice?.createdAt),
+        }).format(invoice.createdAt),
         due_date: new Intl.DateTimeFormat('en-AU', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
-        }).format(invoice?.dueDate),
-        items: invoice?.items,
+        }).format(invoice.dueDate),
+        items: invoice.items,
+        quote: invoice.quote,
 
       }
     }
-  }),
+  ),
 
-  create: protectedProcedure
+  createInvoice: protectedProcedure
   .input(z.object({ 
     clientId:z.string(),
     businessId:z.string(),
     items: z.array(z.object({
       sno: z.number(),
+      name: z.string(),
       desc: z.string(),
       qty: z.number(),
       rate: z.number(),
@@ -71,7 +77,7 @@ export const invoiceRouter = createTRPCRouter({
    }))
   .mutation(async (opts) => {
     await Promise.all(opts.input.items.map(
-      async (item)  =>( await opts.ctx.db.item.findUnique({ where: { name: item.desc } })?
+      async (item)  =>( await opts.ctx.db.item.findUnique({ where: { name: item.name } })?
       {}: opts.ctx.db.item.create({data:{name:item.desc}}))
     ))
 
@@ -84,8 +90,15 @@ export const invoiceRouter = createTRPCRouter({
         dueDate: opts.input.dueDate
       },
     });
-  }),
+  })
+  ,
+  getItem: protectedProcedure.query(async (opts) => {
+    const item = await opts.ctx.db.item.findMany()
 
+    return {data: item.map((item) => ({id:item.id, name:item.name}))};
+    
+  })
+  ,
   getSecretMessage: protectedProcedure.query(() => {
     return "this is a secret message!";
   }),

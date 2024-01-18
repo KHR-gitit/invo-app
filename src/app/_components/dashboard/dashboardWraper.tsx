@@ -13,7 +13,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { useRouter } from 'next/navigation'
 
 
 const navigation = [
@@ -37,14 +36,14 @@ function classNames(...classes: string[]) {
 
 export default function DashboardWraper
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-({user, children}: {user: { name?: string | null | undefined; email?: string | null | undefined; image?: string | null | undefined; },children: React.ReactNode}) {
+({user, children, activeMenu}: {
+  user: { name?: string | null | undefined; 
+    email?: string | null | undefined; 
+    image?: string | null | undefined; },
+  children: React.ReactNode, 
+  activeMenu: (activeItem:string)=>void
+}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const router = useRouter()
- 
-  const setActive = ({activeItem}:{activeItem: string}) => {
-    router.push(`?active=${activeItem}`)
-    
-  }
 
   return (
     <>
@@ -106,15 +105,15 @@ export default function DashboardWraper
                             {navigation.map((item) => (
                               <li key={item.name}>
                                 <a
-                                  onClick={() => {setActive({activeItem: item.name})
-                          navigation.map((item) => item.current = false)
-                          item.current = true
-                        }}
+                                  onClick={()=>{activeMenu(item.name)
+                                  navigation.map((i)=>i.current = false)
+                                  item.current = true
+                                  }}
                                   className={classNames(
                                     item.current
                                       ? 'bg-gray-800 text-white'
                                       : 'text-gray-400 hover:text-white hover:bg-gray-800',
-                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold hover:cursor-pointer'
                                   )}
                                 >
                                   <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
@@ -143,7 +142,7 @@ export default function DashboardWraper
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+        <div className="hidden z-50 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
@@ -160,15 +159,15 @@ export default function DashboardWraper
                     {navigation.map((item) => (
                       <li key={item.name} >
                         <a
-                          onClick={() => {setActive({activeItem: item.name})
-                          navigation.map((item) => item.current = false)
+                          onClick={()=>{activeMenu(item.name)
+                          navigation.map((i)=>i.current = false)
                           item.current = true
-                        }}
+                          }}
                           className={classNames(
                             item.current
                               ? 'bg-gray-800 text-white'
                               : 'text-gray-400 hover:text-white hover:bg-gray-800',
-                            'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
+                            'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold hover:cursor-pointer'
                           )}
                         >
                           <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
@@ -280,7 +279,7 @@ export default function DashboardWraper
           </div>
 
           <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
+            <div className="px-4 relative z-10 sm:px-6 lg:px-8">
               {/* this section needs to change everytime we go to deferent menu */}
                                 {/* <Dashboard/> */}
                                 
